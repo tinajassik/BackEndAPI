@@ -1,21 +1,25 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccess;
 
-public class DbContext : Microsoft.EntityFrameworkCore.DbContext
+public class AppContext : DbContext
 {
-    
-    
-    public DbSet<Plant> Plants { get; set; }
-    public DbSet<PlantPreset> Presets { get; set; }
-    
-    
+    // private readonly IConfiguration configuration;
+    // public AppContext(IConfiguration configuration)
+    // {
+    //     this.configuration = configuration;
+    // }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source = ../DataAccess/PlantData.db");
+        optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=tina;");
     }
-    
+
+    public DbSet<Plant> Plants { get; set; }
+    public DbSet<PlantPreset> Presets { get; set; }
+
     // I am not sure if we need this 
     
     // protected override void OnModelCreating(ModelBuilder modelBuilder)

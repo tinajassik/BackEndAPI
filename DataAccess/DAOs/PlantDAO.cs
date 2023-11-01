@@ -7,11 +7,11 @@ namespace DataAccess.DAOs;
 
 public class PlantDAO : IPlantDAO
 {
-    private readonly DbContext DbContext;
+    private readonly AppContext _appContext;
 
-    public PlantDAO(DbContext dbContext)
+    public PlantDAO(AppContext appContext)
     {
-        DbContext = dbContext;
+        _appContext = appContext;
     }
 
     public async Task<Plant> CreateAsync(PlantCreationDTO plantCreationDto)
@@ -25,8 +25,8 @@ public class PlantDAO : IPlantDAO
                 // PlantPreset = plantCreationDto.PlantPreset, 
                 Name = plantCreationDto.Name
             };
-            EntityEntry<Plant> newPlant = await DbContext.Plants.AddAsync(plant);
-            await DbContext.SaveChangesAsync();
+            EntityEntry<Plant> newPlant = await _appContext.Plants.AddAsync(plant);
+            await _appContext.SaveChangesAsync();
             return newPlant.Entity;
         }
         catch (Exception e)
