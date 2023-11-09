@@ -22,7 +22,7 @@ public class PlantDAO : IPlantDAO
             {
                 Location = plantCreationDto.Location,
                 Type = plantCreationDto.Type,
-                // PlantPreset = plantCreationDto.PlantPreset, 
+                PlantPreset = await _appContext.Presets.FindAsync(plantCreationDto.PlantPresetId),
                 Name = plantCreationDto.Name
             };
             EntityEntry<Plant> newPlant = await _appContext.Plants.AddAsync(plant);
